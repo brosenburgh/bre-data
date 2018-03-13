@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.bre</groupId>
+    <artifactId>bre-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../bre-parent/pom.xml</relativePath>
+  </parent>
+  
+  <artifactId>bre-data</artifactId>
+  <name>BRE Data</name>
+  <packaging>jar</packaging>
+
+  <properties>
+		<java-version>1.8</java-version>
+		<springboot-version>2.0.0.RELEASE</springboot-version>
+	</properties>
+	  
+  <scm>
+      <connection>scm:git:ssh://git@bitbucket.org/brosenburgh/bre-common.git</connection>
+      <developerConnection>scm:git:ssh://git@bitbucket.org/brosenburgh/bre-common.git</developerConnection>
+      <url>https://brosenburgh@bitbucket.org/brosenburgh/bre-common.git</url>
+      <tag>HEAD</tag>
+  </scm>  
+    
+  <dependencies>
+		<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+	    <version>${springboot-version}</version>
+	    <exclusions>
+	    		<exclusion>
+			    <groupId>ch.qos.logback</groupId>
+			    <artifactId>logback-classic</artifactId>
+        </exclusion>
+	    </exclusions>
+		</dependency>
+  		<dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>
+  				spring-boot-configuration-processor
+  			</artifactId>
+	    <version>${springboot-version}</version>
+  			<optional>true</optional>
+  		</dependency>
+  </dependencies>
+  
+  <profiles>
+  		<profile>
+  			<id>dataloader</id>
+  			<build>
+  			<plugins>
+  				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+	 				<configuration>
+						<executable>true</executable>
+						<mainClass>org.bre.data.util.DBLoader</mainClass>
+					</configuration>		
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>				
+				</plugin> 
+  			</plugins>
+  			</build>
+  		</profile>
+  </profiles>
+  
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>
+			<!-- BUILD SOURCE FILES -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>  
+
+</project>
