@@ -3,5 +3,6 @@
 target
 .apt_generated
 .factory_path
+.factorypath
 .DS_Store
 .settings
